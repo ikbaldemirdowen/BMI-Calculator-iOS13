@@ -8,8 +8,8 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class CalculateViewController: UIViewController {
+    var bmiGlobal : String = "0.0"
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -40,6 +40,17 @@ class ViewController: UIViewController {
         let height = heightSlider.value
         let weight = weightSlider.value
         let BMI = weight / (pow(height, 2))
-        print(BMI)
+        bmiGlobal = String(format: "%.1f", BMI)
+        
+        //showing the second view
+        self.performSegue(withIdentifier: "goToResult", sender: self    )
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToResult"
+        {
+            let destinationVC = segue.destination as! ResultsViewController
+            destinationVC.bmiValue = String(bmiGlobal)
+        }
     }
 }
