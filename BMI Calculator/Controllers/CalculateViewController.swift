@@ -50,7 +50,7 @@ class CalculateViewController: UIViewController {
         if segue.identifier == "goToResult"
         {
             let destinationVC = segue.destination as! ResultsViewController
-            destinationVC.bmiValue = String(bmiGlobal)
+            destinationVC.bmiValuee = String(bmiGlobal)
         }
     }
 }
