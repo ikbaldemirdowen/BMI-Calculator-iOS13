@@ -46,6 +46,8 @@ class CalculateViewController: UIViewController {
             // accept the destination below as ResultsViewController, not UIViewController, just like initiating an object
             let destinationVC = segue.destination as! ResultsViewController //this is forced downcasting
             destinationVC.bmiValuee = calculatorBrain.getBMI()
+            destinationVC.advice = calculatorBrain.getAdvice()
+            destinationVC.color = calculatorBrain.getColor()
         }
     }
 }
