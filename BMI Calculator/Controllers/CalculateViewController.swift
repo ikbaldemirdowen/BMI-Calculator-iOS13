@@ -9,7 +9,7 @@
 import UIKit
 
 class CalculateViewController: UIViewController {
-    var bmiGlobal : String = "0.0"
+    var calculatorBrain = CalculatorBrain()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -20,35 +20,32 @@ class CalculateViewController: UIViewController {
     @IBOutlet weak var heightSlider: UISlider!
     @IBOutlet weak var weightSlider: UISlider!
     
-    var heightt : Int = 0
-    var weightt : Int = 0
     
     @IBAction func heightSlider(_ sender: UISlider)
     {
-        heightLabel.text = String(format: "%.2f", "\(sender.value)m")
+        heightLabel.text = String(format : "%.1f", sender.value) + "m"
     }
     
     
     @IBAction func weightSlider(_ sender: UISlider)
     {
-        weightLabel.text = String(format: "%.0f", "\(sender.value)kg")
+        weightLabel.text = String(format : "%.0f", sender.value) + "kg"
     }
     @IBAction func calculatePressed(_ sender: UIButton)
     {
         let height = heightSlider.value
         let weight = weightSlider.value
-        let BMI = weight / (pow(height, 2))
-        bmiGlobal = String(format: "%.1f", BMI)
-        
+        calculatorBrain.calculateBMI(height: height, weight: weight)
         //showing the second view
-        self.performSegue(withIdentifier: "goToResult", sender: self    )
+        performSegue(withIdentifier: "goToResult", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToResult"
         {
-            let destinationVC = segue.destination as! ResultsViewController
-            destinationVC.bmiValuee = String(bmiGlobal)
+            // accept the destination below as ResultsViewController, not UIViewController, just like initiating an object
+            let destinationVC = segue.destination as! ResultsViewController //this is forced downcasting
+            destinationVC.bmiValuee = calculatorBrain.getBMI()
         }
     }
 }
